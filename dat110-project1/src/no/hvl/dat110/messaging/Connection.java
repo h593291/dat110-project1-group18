@@ -34,33 +34,25 @@ public class Connection {
 
 	public void send(Message message) {
 
-		byte[] data;
-		
-		// TODO - START
-		// encapsulate the data contained in the message and write to the output stream
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-			
-		// TODO - END
-
+		try {
+			byte[] segment = MessageUtils.encapsulate(message);
+			outStream.write(segment);
+		} catch (IOException e) {
+			System.out.println("Connection send: " + e.getMessage());
+			e.printStackTrace();
+		}
 	}
 
 	public Message receive() {
-
-		Message message = null;
-		byte[] data;
 		
-		// TODO - START
-		// read a segment from the input stream and decapsulate into message
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
-		
-		return message;
-		
+		try {
+			byte[] segment = inStream.readNBytes(128);
+			return MessageUtils.decapsulate(segment);
+		} catch (IOException e) {
+			System.out.println("Connection receive: " + e.getMessage());
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	// close the connection by closing streams and the underlying socket	
