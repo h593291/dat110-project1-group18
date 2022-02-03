@@ -6,8 +6,6 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
-import no.hvl.dat110.TODO;
-
 
 public class Connection {
 
@@ -46,7 +44,7 @@ public class Connection {
 	public Message receive() {
 		
 		try {
-			byte[] segment = inStream.readNBytes(128);
+			byte[] segment = inStream.readNBytes(MessageUtils.SEGMENTSIZE);
 			return MessageUtils.decapsulate(segment);
 		} catch (IOException e) {
 			System.out.println("Connection receive: " + e.getMessage());

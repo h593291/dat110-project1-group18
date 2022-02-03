@@ -1,7 +1,8 @@
 package no.hvl.dat110.rpc;
 
-import no.hvl.dat110.TODO;
-import no.hvl.dat110.messaging.*;
+import no.hvl.dat110.messaging.Connection;
+import no.hvl.dat110.messaging.Message;
+import no.hvl.dat110.messaging.MessagingClient;
 
 public class RPCClient {
 
@@ -9,56 +10,30 @@ public class RPCClient {
 	private Connection connection;
 	
 	public RPCClient(String server, int port) {
-	
+
 		msgclient = new MessagingClient(server,port);
 	}
 	
+	// TODO Constructor connection == null
 	public void connect() {
-		
-		// TODO - START
-		// connect using the underlying messaging layer connection
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		if(connection != null) return;
+		connection = msgclient.connect();
 	}
 	
 	public void disconnect() {
-		
-		// TODO - START
-		// disconnect/close the underlying messaging connection
-		
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
+		if(connection == null) return;
+		connection.close();
+		connection = null;
 	}
 	
 	public byte[] call(byte rpcid, byte[] params) {
 		
-		byte[] returnval = null;
+		byte[] rpcmsg = RPCUtils.encapsulate(rpcid, params);
+		Message message = new Message(rpcmsg);
 		
-		// TODO - START 
+		connection.send(message);
+		Message response = connection.receive();
 		
-		/* 
-		 * 
-		Make a remote call on the RPC server by sending an RPC request message
-		and receive an RPC reply message
-		
-		params is the marshalled parameters from the client-stub
-				
-		The rpcid, params, and return value must be encapsulated/decapsulated
-		according to the RPC message format
-			
-		*/
-				
-		if (true)
-			throw new UnsupportedOperationException(TODO.method());
-		
-		// TODO - END
-		return returnval;
-		
+		return RPCUtils.decapsulate(response.getData());
 	}
-
 }

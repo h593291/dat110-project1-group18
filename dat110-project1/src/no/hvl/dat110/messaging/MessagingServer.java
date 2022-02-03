@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import no.hvl.dat110.TODO;
-
 public class MessagingServer {
 
 	private ServerSocket welcomeSocket;
@@ -13,7 +11,6 @@ public class MessagingServer {
 	public MessagingServer(int port) {
 
 		try {
-
 			this.welcomeSocket = new ServerSocket(port);
 
 		} catch (IOException ex) {

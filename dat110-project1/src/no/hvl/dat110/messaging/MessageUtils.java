@@ -8,13 +8,13 @@ public class MessageUtils {
 
 	public static final int SEGMENTSIZE = 128;
 
-	public static final int MESSAGINGPORT = 8080;
+	public static final int MESSAGINGPORT = 8081;
 	public static final String MESSAGINGHOST = "localhost";
 	
 	public static byte[] encapsulate(Message message) {
 		
 		byte[] data = message.getData();
-		byte[] segment = new byte[128];
+		byte[] segment = new byte[SEGMENTSIZE];
 		
 		segment[0] = (byte) data.length;
 		for(int i = 0; i < data.length; i++) {
